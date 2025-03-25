@@ -9,6 +9,12 @@ CORS(app)
 app.config.from_object(config['development'])
 con = MySQL(app)
 
+
+@app.route('/')
+def home():
+    return "Flask en Vercel funcionando 🚀"
+
+
 # 📌 Obtener los sliders disponibles
 @app.route("/obtenerSliders", methods=['GET'])
 def obtener_sliders():
