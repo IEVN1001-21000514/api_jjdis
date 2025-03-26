@@ -12,7 +12,7 @@ con = MySQL(app)
 
 @app.route('/')
 def home():
-    return "Flask en Vercel funcionando 🚀"
+    return "Flask en Render"
 
 
 # 📌 Obtener los sliders disponibles
