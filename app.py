@@ -116,13 +116,12 @@ def guardar_registro_pedido():
     except Exception as ex:
         return jsonify({'mensaje': f'Error al guardar el registro: {str(ex)}', 'exito': False})
 
-
 # 📌 Obtener los registros de pedido
 @app.route("/obtenerRegistroPedidos", methods=['GET'])
 def obtener_registro_pedido():
     try:
         cursor = con.connection.cursor()
-        cursor.execute("SELECT id_registroPedido, id_slider, secuencia, cantidad FROM registroPedido WHERE estado = 'pendiente'")
+        cursor.execute("SELECT id_registropedido, id_slider, secuencia, cantidad FROM registroPedido WHERE estado = 'pendiente'")
         registros = cursor.fetchall()
         return jsonify([
             {'id_registroPedido': r[0], 'id_slider': r[1], 'secuencia': r[2], 'cantidad': r[3]}
