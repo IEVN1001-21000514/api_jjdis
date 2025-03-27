@@ -108,7 +108,7 @@ def guardar_registro_pedido():
     try:
         data = request.get_json()
         cursor = con.connection.cursor()
-        sql = """INSERT INTO registroPedido (id_slider, secuencia, cantidad, estado) 
+        sql = """INSERT INTO registropedido (id_slider, secuencia, cantidad, estado) 
                  VALUES (%s, %s, %s, 'pendiente')"""  # Estado por defecto "pendiente"
         cursor.execute(sql, (data['id_slider'], data['secuencia'], data['cantidad']))
         con.connection.commit()
