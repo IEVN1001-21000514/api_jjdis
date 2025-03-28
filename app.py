@@ -190,7 +190,6 @@ def crear_pedido():
         return jsonify({'mensaje': f'Error al crear el pedido: {str(ex)}', 'exito': False})
 
 
-
 # 📌 Obtener los pedidos detallados con sliders, cantidad y secuencia
 @app.route("/obtenerPedidosDetallados", methods=['GET'])
 def obtener_pedidos_detallados():
@@ -199,7 +198,7 @@ def obtener_pedidos_detallados():
         sql = """
             SELECT p.numero_pedido, s.nombreSlider, r.cantidad, r.secuencia 
             FROM pedido p
-            JOIN registroPedido r ON p.id_registroPedido = r.id_registroPedido
+            JOIN registropedido r ON p.id_registroPedido = r.id_registroPedido
             JOIN sliders s ON r.id_slider = s.id_sliders
             ORDER BY p.numero_pedido DESC;
         """
@@ -242,7 +241,7 @@ def obtener_registros_por_numero_pedido(numero_pedido):
         # Realizamos un JOIN entre registroPedido y Pedido
         cursor.execute("""
             SELECT rp.id_slider, s.nombreSlider, rp.secuencia, rp.cantidad
-            FROM registroPedido rp
+            FROM registropedido rp
             JOIN Pedido p ON rp.id_registroPedido = p.id_registroPedido
             JOIN sliders s ON rp.id_slider = s.id_sliders
             WHERE p.numero_pedido = %s
