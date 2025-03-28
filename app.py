@@ -121,7 +121,7 @@ def guardar_registro_pedido():
 def obtener_registro_pedido():
     try:
         cursor = con.connection.cursor()
-        cursor.execute("SELECT id_registropedido, id_slider, secuencia, cantidad FROM registroPedido WHERE estado = 'pendiente'")
+        cursor.execute("SELECT id_registropedido, id_slider, secuencia, cantidad FROM registropedido WHERE estado = 'pendiente'")
         registros = cursor.fetchall()
         return jsonify([
             {'id_registroPedido': r[0], 'id_slider': r[1], 'secuencia': r[2], 'cantidad': r[3]}
@@ -138,7 +138,7 @@ def actualizar_registro_pedido():
     try:
         data = request.get_json()
         cursor = con.connection.cursor()
-        cursor.execute("UPDATE registroPedido SET id_slider = %s, secuencia = %s, cantidad = %s WHERE id_registroPedido = %s",
+        cursor.execute("UPDATE registropedido SET id_slider = %s, secuencia = %s, cantidad = %s WHERE id_registroPedido = %s",
                        (data['id_slider'], data['secuencia'], data['cantidad'], data['id_registroPedido']))
         con.connection.commit()
         return jsonify({'mensaje': 'Registro actualizado correctamente', 'exito': True})
@@ -151,7 +151,7 @@ def actualizar_registro_pedido():
 def eliminar_registro_pedido(id_registroPedido):
     try:
         cursor = con.connection.cursor()
-        cursor.execute("DELETE FROM registroPedido WHERE id_registroPedido = %s", (id_registroPedido,))
+        cursor.execute("DELETE FROM registropedido WHERE id_registroPedido = %s", (id_registroPedido,))
         con.connection.commit()
         return jsonify({'mensaje': 'Registro eliminado correctamente', 'exito': True})
     except Exception as ex:
@@ -168,7 +168,7 @@ def crear_pedido():
         nuevo_numero_pedido = cursor.fetchone()[0]
 
         # Obtener todos los registros de registroPedido que no han sido asignados
-        cursor.execute("SELECT id_registroPedido FROM registroPedido WHERE estado IS NULL OR estado != 'asignado'")
+        cursor.execute("SELECT id_registroPedido FROM registropedido WHERE estado IS NULL OR estado != 'asignado'")
         registros = cursor.fetchall()
 
         if not registros:
@@ -177,7 +177,7 @@ def crear_pedido():
         # Insertar cada registro con el mismo numero_pedido y actualizar su estado a "asignado"
         sql_insert = """INSERT INTO pedido (numero_pedido, id_registroPedido, fecha_registro) 
                         VALUES (%s, %s, NOW())"""
-        sql_update = """UPDATE registroPedido SET estado = 'asignado' WHERE id_registroPedido = %s"""
+        sql_update = """UPDATE registropedido SET estado = 'asignado' WHERE id_registroPedido = %s"""
         
         for r in registros:
             cursor.execute(sql_insert, (nuevo_numero_pedido, r[0]))
