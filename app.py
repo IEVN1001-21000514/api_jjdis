@@ -242,7 +242,7 @@ def obtener_registros_por_numero_pedido(numero_pedido):
         cursor.execute("""
             SELECT rp.id_slider, s.nombreSlider, rp.secuencia, rp.cantidad
             FROM registropedido rp
-            JOIN Pedido p ON rp.id_registroPedido = p.id_registroPedido
+            JOIN pedido p ON rp.id_registroPedido = p.id_registroPedido
             JOIN sliders s ON rp.id_slider = s.id_sliders
             WHERE p.numero_pedido = %s
         """, (numero_pedido,))
